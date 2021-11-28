@@ -25,8 +25,17 @@ namespace Util
 		
 		
 		
-		
-		
+		public static IntCoord ByPosition(Vector3 position, float scale)
+		{
+			return new IntCoord(
+				Mathf.RoundToInt(position.x / scale),
+				Mathf.RoundToInt(position.y / scale),
+				Mathf.RoundToInt(position.z / scale));
+		}
+
+		public Vector3 ToPosition(float scale) => 
+			new Vector3(x * scale, y * scale, z * scale);
+
 		
 		
 		
@@ -112,5 +121,14 @@ namespace Util
 		{
 			return (x == other.x && y == other.y && z == other.z);
 		}
+	}
+	
+	
+	
+	public static class IntCoordExtentions
+	{
+		public static IntCoord ToIntCoord(this Vector3 original, float scale) => IntCoord.ByPosition(original, scale);
+
+
 	}
 }

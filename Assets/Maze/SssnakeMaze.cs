@@ -10,7 +10,7 @@ namespace Maze
 		private Random _random;
 
 		private int _extent;
-		private Dictionary<IntCoord, MazeCell> Cells = new Dictionary<IntCoord, MazeCell>();
+		public Dictionary<IntCoord, MazeCell> Cells { get; } = new Dictionary<IntCoord, MazeCell>();
 
 		private List<IntCoord> path = new List<IntCoord>();
 		

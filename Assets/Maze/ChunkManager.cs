@@ -8,7 +8,13 @@ namespace Maze
 {
     public class ChunkManager : MonoBehaviour
     {
-        public float chunkSize = 4;
+        [Tooltip("Size of chunks, in meters")]
+        public float chunkSize = 40;
+        [Tooltip("In extents format. # of grid sections between center and edge.")]
+        public int gridsExtent = 10;
+
+        public GameObject WallPrefab;
+        
         public Dictionary<IntCoord, Chunk> Chunks = new Dictionary<IntCoord, Chunk>();
         public Transform playerTform;
         public GameObject _chunkPrefab;
@@ -28,16 +34,7 @@ namespace Maze
 
         #region === Translation ===---------
 
-        private IntCoord PositionToIntCoord(Vector3 position)
-        {
-            return new IntCoord(
-                Mathf.RoundToInt(position.x / chunkSize),
-                Mathf.RoundToInt(position.y / chunkSize),
-                Mathf.RoundToInt(position.z / chunkSize));
-        }
 
-        private Vector3 IntCoordToPosition(IntCoord coord) => 
-            new Vector3(coord.x * chunkSize, coord.y * chunkSize, coord.z * chunkSize);
         
 
         #endregion /Translation ===---------
@@ -61,7 +58,7 @@ namespace Maze
         
 
         public void PopulateByPosition(Vector3 position) =>
-            PopulateByPosition(PositionToIntCoord(position));
+            PopulateByPosition(position.ToIntCoord(chunkSize));
         
 
         /// <summary>
@@ -82,9 +79,11 @@ namespace Maze
 
         private void InstantiateChunk(IntCoord coord)
         {
+            var blah = coord.ToPosition(chunkSize);
             var chunk = Instantiate(
-                _chunkPrefab, IntCoordToPosition(coord), Quaternion.identity, transform).GetComponent<Chunk>();
-            chunk.Coordinate = coord;
+                _chunkPrefab, coord.ToPosition(chunkSize), Quaternion.identity, transform).GetComponent<Chunk>();
+            chunk.Setup(coord);
+            
             Chunks.Add(coord, chunk);
         }
 
