@@ -80,7 +80,7 @@ namespace Maze
 			
 			IntCoord ChooseBetween(List<IntCoord> options)
 			{
-				return options[ _random.Next(0, options.Count - 1)];
+				return options[ _random.Next(0, options.Count)];
 			}
 			
 			
