@@ -91,17 +91,12 @@ namespace Maze
 
 				foreach (var neighbor in neighbors)
 				{
-					if(neighbor.Furthest() < _extent && !Cells.ContainsKey(neighbor))
+					if(neighbor.Furthest() <= _extent && !Cells.ContainsKey(neighbor))
 						includedNeighbors.Add(neighbor);
 				}
 
 				return includedNeighbors;
-			
 			}
-
 		}
-		
-		
-		
 	}
 }
